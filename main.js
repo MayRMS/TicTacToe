@@ -124,7 +124,7 @@ const machineTurn = () => {
         machine.tokens = machine.tokens - 1
         if(winCondition(machine.tablePlayer)){
             localStorage.setItem('winner', 'MACHINE')
-            window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
+            window.location.assign('./winnerView.html')
         }
         changeTurn()
     } else {
@@ -141,7 +141,7 @@ const machineTurn = () => {
         machine.tokens = machine.tokens - 1
         if(winCondition(machine.tablePlayer)){
             localStorage.setItem('winner', 'MACHINE')
-            window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
+            window.location.assign('./winnerView.html')
         }
         changeTurn()
     }
@@ -161,7 +161,7 @@ for(let i = 1; i <= 9; i++){
             placeToken(box)
             if(winCondition(currentPlayer.tablePlayer)){
                 localStorage.setItem('winner', currentPlayer.name)
-                window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
+                window.location.assign('./winnerView.html')
             }
             changeTurn()
         } else {
