@@ -30,6 +30,7 @@ document.getElementById('mode2players')?.addEventListener('click', () => {
 
 document.getElementById('mode1player')?.addEventListener('click', () => {
     window.localStorage.setItem('name1', document.getElementById('txtName1').value)
+    window.localStorage.setItem('name2', document.getElementById('txtName2').value)
     window.localStorage.setItem('machine', true)
 
     // tiene que ir a la vista de juego
@@ -102,16 +103,16 @@ const changeTurn= ()=>{
 
  //funcionmachineRandom
  const machineRandom = (min, max)=> {
-    let foo = true
-    let patata;
-    while (foo) {
+    let randTurn = true
+    let randWork;
+    while (randTurn) {
         let a = Math.floor(Math.random() * (max - min) ) + min;
         if( !players[0].tablePlayer.includes(a) && !players[1].tablePlayer.includes(a)){
-            patata = a
-            foo = false
+            randWork = a
+            randTurn = false
         }
      }
-    return patata;
+    return randWork;
   }
 const machineTurn = () => {
     const machine = players[1]
@@ -123,7 +124,7 @@ const machineTurn = () => {
         machine.tokens = machine.tokens - 1
         if(winCondition(machine.tablePlayer)){
             localStorage.setItem('winner', 'MACHINE')
-            location.assign('hmtl/winnerView.html')
+            window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
         }
         changeTurn()
     } else {
@@ -134,14 +135,13 @@ const machineTurn = () => {
         randElement.style.background = defaultBackground;
         machine.tokens = machine.tokens + 1
         const rand2 = machineRandom(0, 8)
-        console.log({rand2})
         const box = document.getElementById(String(rand2 + 1));
         machine.tablePlayer.push(rand2)
         box.style.background = machine.color
         machine.tokens = machine.tokens - 1
         if(winCondition(machine.tablePlayer)){
             localStorage.setItem('winner', 'MACHINE')
-            location.assign('hmtl/winnerView.html')
+            window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
         }
         changeTurn()
     }
@@ -161,7 +161,7 @@ for(let i = 1; i <= 9; i++){
             placeToken(box)
             if(winCondition(currentPlayer.tablePlayer)){
                 localStorage.setItem('winner', currentPlayer.name)
-                location.assign('hmtl/winnerView.html')
+                window.location.assign('http://127.0.0.1:5500/hmtl/winnerView.html')
             }
             changeTurn()
         } else {
