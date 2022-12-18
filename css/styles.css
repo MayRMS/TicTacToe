@@ -9,33 +9,314 @@ body{
     justify-content: center;
 }
 
+#bodyContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/img/fondoTablero3.gif');
+    background-size: cover;
+}
+
 #gridContainer{
-    width: 80%;
-    height: 90%;
+    width: 40vw;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    position: relative;
     
 }
 
+#gridContainer::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        50deg,
+        rgb(0, 51, 255),rgb(0, 242, 255),rgb(251, 20, 255),orange,rgb(0, 51, 255),rgb(0, 242, 255),rgb(251, 20, 255),orange
+    );
+    background-size: 600%;
+    border-radius: 10px;
+    filter: blur(40px);
+    animation: glowing 20s linear infinite;
+}
+@keyframes glowing {
+    0%{
+        background-position: 0 0;
+    }
+    50%{
+        background-position: 400% 0;
+    }
+    100%{
+        background-position: 0 0;
+    }
+}
+
+.playerName{
+    width: 25vw;
+    height: 100%;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+}
+
+#namePlayer1{
+    font-family: 'TRON', sans-serif;
+    color: aqua;
+    font-size: 40px;
+    font-weight: lighter;
+    text-shadow: rgb(3, 59, 59) 10px 0 20px;
+
+}
+#namePlayer2{
+    margin-left: 30px;
+    font-family: 'TRON', sans-serif;
+    color: rgb(249, 7, 220);
+    font-size: 40px;
+    font-weight: lighter;
+    text-shadow: rgb(85, 4, 78) 15px 0 20px;
+
+}
+
 .rows{
-    width: 80%;
+    width: 100%;
     height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: aquamarine;
+    
     
 }
 
 .casillas{
-    width: 33%;
+    width: 40%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed rgba(11, 220, 217, 0.644);
+    border-radius: 100px;
+}
+
+
+
+
+/*//// START VIEW ////*/
+
+#startViewContainer{
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
-
+    flex-direction: column;
+    background-image: url("/img/397378-wallpaper-sunset-abstract-grid-mountain-digital-art.jpeg");
+    background-size: cover;
     
 }
+
+#title{
+    width: 90vw;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    color: aqua;
+    font-size: 650%;
+    font-weight: lighter;
+    text-shadow: rgb(82, 211, 211) 10px 0 20px;
+}
+
+#buttonStart{
+    width: 60vw;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.button {
+    color: #520f40;
+    border: 6px solid #db3eb1;
+    border-radius:15px;
+    padding: 15px 25px;
+    font-size: 30px;
+    font-family: 'TRON', sans-serif;
+    letter-spacing:5px;
+    cursor: pointer;
+    font-weight: bold;
+    filter: drop-shadow(0 0 15px #db3eb1) drop-shadow(0 0 50px #db3eb1) contrast(2) brightness(2);
+    transition: .5s;
+  }
+  
+  .button:hover {
+    color: black;
+    background-color: #db3eb1;
+    filter: drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(2);
+  }
+
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+
+/*////SELECT MENU////*/
+
+
+#titleMenu{
+    width: 90vw;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    color: aqua;
+    font-size: 650%;
+    font-weight: lighter;
+    text-shadow: rgb(82, 211, 211) 10px 0 20px;
+}
+
+#playerMode{
+    width: 90vw;
+    height: 20vh;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    font-size: 40px;
+    color: rgb(255, 106, 0);
+    text-shadow: rgb(66, 32, 3) 10px 0 10px;
+}
+
+#playerModeButtons{
+    width: 90vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    flex-direction:row;
+}
+
+.buttonPlayer{
+    color: #520f40;
+    border: 6px solid #ec5c2c;
+    border-radius:15px;
+    padding: 15px 25px;
+    font-size: 20px;
+    font-family: 'TRON', sans-serif;
+    cursor: pointer;
+    font-weight: bold;
+    filter: drop-shadow(0 0 15px #db3eb1) drop-shadow(0 0 50px #db3eb1) contrast(2) brightness(2);
+    transition: .5s;
+}
+
+.buttonPlayer:hover {
+    color: black;
+    background-color: #dd1856;
+    filter: drop-shadow(0 0 20px #da1960) contrast(2) brightness(2);
+}
+
+#nameSelect{
+    width: 90vw;
+    height: 18vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    font-size: 25px;
+    text-shadow: rgb(235, 136, 235) 1px 0 10px;
+    color: #ef02c7;
+    
+}
+
+/*Input name*/
+.modern-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
+  .float-label-field input {
+    border: none;
+    outline: none;
+    padding: 5px 5px 8px 0px;
+    width: 90%;
+    font-size: 18px;
+    font-family: 'TRON', sans-serif;
+    border-bottom: solid 1px #dc17c8;
+    background-color: #e232d6a6;
+  }
+  
+/*//// WINNER VIEW ////*/
+
+#winnerViewContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url("/img/fondoTablero.gif");
+    background-size: cover;
+}
+
+#winnerTitle{
+    width: 100vw;
+    height: 23vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    color: rgb(242, 0, 255);
+    font-size: 70px;
+    font-weight: lighter;
+    text-shadow: rgb(38, 223, 205) 10px 0 20px;
+}
+
+#winnerName{
+    width: 100vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    color: rgb(134, 10, 83);
+    font-size: 60px;
+    font-weight: lighter;
+    text-shadow: rgb(235, 118, 16) 15px 0 20px;
+}
+
+#winnerTitle2{
+    width: 100vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'TRON', sans-serif;
+    color: rgb(242, 0, 255);
+    font-size: 70px;
+    font-weight: lighter;
+    text-shadow: rgb(38, 223, 205) 10px 0 20px;
+}
+
+
+

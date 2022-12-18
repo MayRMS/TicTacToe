@@ -1,35 +1,71 @@
 
+// en la pantalla select mode, coger el nombre de los dos jugadores, o en caso de que
+// ** elija la máquina, máquina. 
+
 let turn = false
-const defaultBackground = 'aquamarine'
+const player1Name = localStorage.getItem('name1');
+const player1Id = document.getElementById('namePlayer1')
+if (player1Name && player1Id) {
+    player1Id.innerHTML = player1Name
+}
+const player2Name = localStorage.getItem('name2');
+const player2Id = document.getElementById('namePlayer2')
+if (player2Name && player2Id) {
+    player2Id.innerHTML = player2Name
+}
+
+const winnerName = localStorage.getItem('winner');
+const winnerId = document.getElementById('winnerName')
+if (winnerName && winnerId) {
+    winnerId.innerHTML = winnerName
+}
+
+document.getElementById('mode2players')?.addEventListener('click', () => {
+    window.localStorage.setItem('name1', document.getElementById('txtName1').value)
+    window.localStorage.setItem('name2', document.getElementById('txtName2').value)
+    window.localStorage.setItem('machine', false)
+    // tiene que ir a la vista de juego
+
+})
+
+document.getElementById('mode1player')?.addEventListener('click', () => {
+    window.localStorage.setItem('name1', document.getElementById('txtName1').value)
+    window.localStorage.setItem('machine', true)
+
+    // tiene que ir a la vista de juego
+})
+// conseguir que el boton de "siguiente" cargue la siguiente vista de html
+
+
+
+const defaultBackground = 'transparent'
 const players = [
     {
-        name: "player 1",
+        name: localStorage.getItem('name1') || "player 1",
         turn: false,
         tokens: 3,
-        color: 'red',
+        color:'rgba(0, 255, 255, 0.467)',
         tablePlayer: []
     },
     {
-        name: "player 2",
+        name: localStorage.getItem('name2') || "player 2",
         turn: true,
         tokens: 3,
-        color: 'yellow',
+        color: 'rgba(250, 53, 214, 0.735)',
         tablePlayer: []
     }
 ];
 
 //condición de victoria
 
-
-const arrContains = (playerTable,contains)=> {
+const arrContains = (playerTable, contains)=> {
     let winCondition = 0
-    for (let i=0; i<= contains.length; i++ ){
+    for (let i = 0; i <= contains.length; i++){
         if (playerTable.includes(contains[i])) {
-            winCondition= winCondition +1
+            winCondition = winCondition +1
         }
     }
     return winCondition === 3 
-
 }
 
 const winCondition = (playerTable)=> {
@@ -45,223 +81,105 @@ const winCondition = (playerTable)=> {
     return false
 }
 
-
 //contador por jugador maximo 3
 
 const placeToken=(place)=> {
     const currentPlayer = players[turn ? 1 : 0]
     console.log(currentPlayer)
     place.style.background = currentPlayer.color
-    currentPlayer.tokens = currentPlayer.tokens -1
+    currentPlayer.tokens = currentPlayer.tokens - 1
 }
-
-
 
 //cambiar el turno
 
 const changeTurn= ()=>{
-    if (turn===false){
+    if (turn===false){ 
      turn=true
-    }else{
+    }else{  
      turn=false
     }
  }
 
-const casilla1= document.getElementById('1')
-casilla1.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(0))) {
-        currentPlayer.tablePlayer.push(0)
-        placeToken(casilla1)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
+ //funcionmachineRandom
+ const machineRandom = (min, max)=> {
+    let foo = true
+    let patata;
+    while (foo) {
+        let a = Math.floor(Math.random() * (max - min) ) + min;
+        if( !players[0].tablePlayer.includes(a) && !players[1].tablePlayer.includes(a)){
+            patata = a
+            foo = false
         }
-        changeTurn(casilla1)
-    }
-    else{
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(0)){
-            console.log(':V')
-            currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=0)
-            casilla1.style.background = defaultBackground
-            currentPlayer.tokens=currentPlayer.tokens +1
+     }
+    return patata;
+  }
+const machineTurn = () => {
+    const machine = players[1]
+    if (machine.tokens > 0) {
+        const rand = machineRandom(0, 8)
+        const box = document.getElementById(String(rand + 1));
+        machine.tablePlayer.push(rand)
+        box.style.background = machine.color
+        machine.tokens = machine.tokens - 1
+        if(winCondition(machine.tablePlayer)){
+            localStorage.setItem('winner', 'MACHINE')
+            location.assign('hmtl/winnerView.html')
         }
-    }
-
-})
-
-const casilla2 = document.getElementById('2')
-casilla2.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(1))) {
-        currentPlayer.tablePlayer.push(1)
-        placeToken(casilla2)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla2)
-    } else {    
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(1)){
-        currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=1)
-        casilla2.style.background = defaultBackground
-        currentPlayer.tokens=currentPlayer.tokens +1
-    }}
-
-    
-})
-
-const casilla3= document.getElementById('3')
-casilla3.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(2))) {
-        currentPlayer.tablePlayer.push(2)
-        placeToken(casilla3)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla3)
+        changeTurn()
     } else {
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(2)){
-            currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=2)
-            casilla3.style.background = defaultBackground
-            currentPlayer.tokens=currentPlayer.tokens +1
+        const rand = Math.floor(Math.random() * (3 - 0) ) + 0;
+        const value = machine.tablePlayer[rand]
+        const randElement = document.getElementById(String(machine.tablePlayer[rand] + 1))
+        machine.tablePlayer = machine.tablePlayer.filter(e => e != value)
+        randElement.style.background = defaultBackground;
+        machine.tokens = machine.tokens + 1
+        const rand2 = machineRandom(0, 8)
+        console.log({rand2})
+        const box = document.getElementById(String(rand2 + 1));
+        machine.tablePlayer.push(rand2)
+        box.style.background = machine.color
+        machine.tokens = machine.tokens - 1
+        if(winCondition(machine.tablePlayer)){
+            localStorage.setItem('winner', 'MACHINE')
+            location.assign('hmtl/winnerView.html')
         }
+        changeTurn()
     }
 
-  
-})
-
-const casilla4= document.getElementById('4')
-casilla4.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(3))) {
-        currentPlayer.tablePlayer.push(3)
-        placeToken(casilla4)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
+}
+const machine = localStorage.getItem('machine')
+for(let i = 1; i <= 9; i++){
+    const box = document.getElementById(`${i}`);
+    box?.addEventListener('click', () => {
+        console.log(players)
+        const currentPlayer = turn ? players[1] : players[0];
+        player1Id.innerHTML = !turn ? player1Name : `${player1Name} 's turn`
+        player2Id.innerHTML = turn ? player2Name : `${player2Name} 's turn`
+        const boxValue = i - 1;
+        if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(boxValue))){
+            currentPlayer.tablePlayer.push(boxValue)
+            placeToken(box)
+            if(winCondition(currentPlayer.tablePlayer)){
+                localStorage.setItem('winner', currentPlayer.name)
+                location.assign('hmtl/winnerView.html')
+            }
+            changeTurn()
+        } else {
+            if (currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(boxValue)){
+                currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e => e != boxValue)
+                box.style.background = defaultBackground
+                currentPlayer.tokens = 1
+            }
         }
-        changeTurn(casilla4)
-    } else {
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(3)){
-            currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=3)
-            casilla4.style.background = defaultBackground
-            currentPlayer.tokens=currentPlayer.tokens +1
+        if (machine === 'true' && turn) {
+            machineTurn()
         }
-    }
+        
 
-    
-})
-
-const casilla5= document.getElementById('5')
-casilla5.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(4))) {
-        currentPlayer.tablePlayer.push(4)
-        placeToken(casilla5)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla5)
-    } else {
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(4)){
-            currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=4)
-            casilla5.style.background = defaultBackground
-            currentPlayer.tokens=currentPlayer.tokens +1
-        }
-    }
-
-    
-})
-
-const casilla6= document.getElementById('6')
-casilla6.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
- 
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(5))) {
-        currentPlayer.tablePlayer.push(5)
-        placeToken(casilla6)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla6)
-    } else {   
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(5)){
-        currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=5)
-        casilla6.style.background = defaultBackground
-        currentPlayer.tokens=currentPlayer.tokens +1
-    }}
-
-    
-})
-
-const casilla7= document.getElementById('7')
-casilla7.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(6))) {
-        currentPlayer.tablePlayer.push(6)
-        placeToken(casilla7)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla7)
-    } else {    
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(6)){
-        currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=6)
-        casilla7.style.background = defaultBackground
-        currentPlayer.tokens=currentPlayer.tokens +1
-    }}
-   
-})
-
-const casilla8= document.getElementById('8')
-casilla8.addEventListener('click',()=> {
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(7))) {
-        currentPlayer.tablePlayer.push(7)
-        placeToken(casilla8)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla8)
-    }else {
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(7)){
-            currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=7)
-            casilla8.style.background = defaultBackground
-            currentPlayer.tokens=currentPlayer.tokens +1
-        }
-    }
-    
-})
-
-const casilla9= document.getElementById('9')
-casilla9.addEventListener('click',()=> {
-
-    const currentPlayer = turn ? players[1] : players[0]
-
-    if (currentPlayer.tokens !== 0 && !players.find(e => e.tablePlayer.includes(8))) {
-        currentPlayer.tablePlayer.push(8)
-        placeToken(casilla9)
-        if(winCondition(currentPlayer.tablePlayer)){
-        alert('VICTORY!')
-        }
-        changeTurn(casilla9)
-    } else {    
-        if(currentPlayer.tokens === 0 && currentPlayer.tablePlayer.includes(8)){
-        currentPlayer.tablePlayer = currentPlayer.tablePlayer.filter(e=> e!=8)
-        casilla9.style.background = defaultBackground
-        currentPlayer.tokens=currentPlayer.tokens +1
-    }}
-
-    
-})
+    })
+}
 
 
-//quitar de las anteriores y poner
-//guarruzo contra maquina
 
 
 
