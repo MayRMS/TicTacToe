@@ -21,7 +21,7 @@ Puedes visitar: https://mayrms.github.io/TicTacToe/
 ![Image text](https://github.com/MayRMS/TicTacToe/blob/main/img/Captura%20de%20Pantalla%202022-12-18%20a%20las%2013.16.33.png)
 ![Image text](https://github.com/MayRMS/TicTacToe/blob/main/img/Captura%20de%20Pantalla%202022-12-18%20a%20las%2013.17.00.png)
 ![Image text](https://github.com/MayRMS/TicTacToe/blob/main/img/Captura%20de%20Pantalla%202022-12-18%20a%20las%2013.17.44.png)
-![Image text](hhttps://github.com/MayRMS/TicTacToe/blob/main/img/Captura%20de%20Pantalla%202022-12-18%20a%20las%2013.18.03.png)
+![Image text](https://github.com/MayRMS/TicTacToe/blob/main/img/Captura%20de%20Pantalla%202022-12-18%20a%20las%2013.18.03.png)
 
 ## Installation
 ***
